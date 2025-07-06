@@ -13,13 +13,13 @@ jobs:
     steps:
       - name: Trigger reminder processing
         run: |
-          # Replace with your actual Vercel domain
-          VERCEL_DOMAIN="your-vercel-domain.vercel.app"
+          # Replace with your actual domain
+          NOTIFICATION_DOMAIN="https://notification-service-xjdl.onrender.com"
 
           echo "Triggering reminder processing at $(date)"
 
-          # Make the request to the cron endpoint
-          response=$(curl -s -w "\n%{http_code}" -X GET "https://$VERCEL_DOMAIN/api/cron-reminders")
+          # Make the request to the reminders endpoint (POST method)
+          response=$(curl -s -w "\n%{http_code}" -X POST "$NOTIFICATION_DOMAIN/notify/reminders")
 
           # Extract the response body and status code
           http_code=$(echo "$response" | tail -n1)
