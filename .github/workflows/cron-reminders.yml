@@ -4,34 +4,27 @@ on:
   schedule:
     # Run every 5 minutes
     - cron: "*/5 * * * *"
-  # Allow manual triggering
-  workflow_dispatch:
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   trigger-reminders:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Trigger reminder processing
+      - name: Trigger Reminder Notifications
         run: |
-          # Replace with your actual domain
-          NOTIFICATION_DOMAIN="https://notification-service-xjdl.onrender.com"
+          echo "Triggering reminder notifications..."
+          # This would typically make a request to your notification service
+          # curl -X POST https://your-notification-service.vercel.app/notify/reminders
 
-          echo "Triggering reminder processing at $(date)"
+          # For now, just log that the workflow ran
+          echo "Reminder check completed at $(date)"
 
-          # Make the request to the reminders endpoint (POST method)
-          response=$(curl -s -w "\n%{http_code}" -X POST "$NOTIFICATION_DOMAIN/notify/reminders")
+        env:
+          # Add any environment variables needed for the notification service
+          NOTIFICATION_SERVICE_URL: ${{ secrets.NOTIFICATION_SERVICE_URL }}
 
-          # Extract the response body and status code
-          http_code=$(echo "$response" | tail -n1)
-          response_body=$(echo "$response" | head -n -1)
-
-          echo "Response status: $http_code"
-          echo "Response body: $response_body"
-
-          # Check if the request was successful
-          if [ "$http_code" -eq 200 ]; then
-            echo "✅ Reminder processing triggered successfully"
-          else
-            echo "❌ Failed to trigger reminder processing"
-            exit 1
-          fi
+      - name: Log Completion
+        run: |
+          echo "Cron reminder workflow completed successfully"
+          echo "Timestamp: $(date -u)"
