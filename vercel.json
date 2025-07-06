@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "functions": {
+    "api/notify-all.js": {
+      "maxDuration": 30
+    },
+    "api/notify-users.js": {
+      "maxDuration": 30
+    },
+    "api/notify-reminders.js": {
+      "maxDuration": 30
+    },
+    "api/cron-reminders.js": {
+      "maxDuration": 30
+    },
+    "api/health.js": {
+      "maxDuration": 10
+    }
+  },
+  "env": {
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_ANON_KEY": "@supabase_anon_key"
+  }
+}
